@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Akmal's | Profile</title>
+	<link rel="icon" type="f1.png" href="f1.png">
+	<style>
+		/* ---------- 1. COLORS & FONTS: change these to restyle the site ---------- */
+		:root {
+			--bg: #f4f6f8;
+			--text: #222222;
+			--accent: #3a6ea5;
+			--accent-text: #ffffff;
+			--card: #ffffff;
+			--border: #d9dee3;
+			--font: Georgia, "Times New Roman", serif;
+		}
+
+		/* ---------- 2. BASE STYLES ---------- */
+		* { box-sizing: border-box; }
+
+		html { scroll-behavior: smooth; }
+
+		body {
+			margin: 0;
+			font-family: var(--font);
+			background-color: var(--bg);
+			color: var(--text);
+			line-height: 1.7;
+		}
+
+		.container {
+			max-width: 900px;
+			margin: 0 auto;
+			padding: 0 20px;
+		}
+
+		h2 {
+			border-bottom: 3px solid var(--accent);
+			display: inline-block;
+			padding-bottom: 4px;
+			margin-bottom: 20px;
+		}
+
+		section { padding: 40px 0; }
+
+		/* ---------- 3. NAVIGATION ---------- */
+		nav {
+			background-color: var(--accent);
+			position: sticky;
+			top: 0;
+			z-index: 10;
+		}
+		nav .container {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 20px;
+			padding-top: 12px;
+			padding-bottom: 12px;
+		}
+		nav a {
+			color: var(--accent-text);
+			text-decoration: none;
+		}
+		nav a:hover { text-decoration: underline; }
+
+		/* ---------- 4. HERO (name, photo, tagline) ---------- */
+		.hero {
+			text-align: center;
+			padding: 60px 0 30px;
+		}
+
+		.photo {
+			width: 180px;
+			height: 180px;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 5px solid var(--accent);
+			margin: 0 auto 20px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: var(--card);
+			font-size: 3rem;
+			color: var(--accent);
+		}
+
+		.hero h1 { margin: 0; font-size: 2.4rem; }
+		.hero p { margin: 6px 0 0; font-style: italic; }
+
+		/* ---------- 5. CARDS & PERSONAL INFO TABLE ---------- */
+		.card {
+			background-color: var(--card);
+			border: 1px solid var(--border);
+			border-radius: 8px;
+			padding: 20px;
+		}
+
+		table { width: 100%; border-collapse: collapse; }
+		th, td {
+			text-align: left;
+			padding: 10px;
+			border-bottom: 1px solid var(--border);
+			vertical-align: top;
+		}
+		th { width: 35%; color: var(--accent); }
+
+		/* ---------- 6. LISTS & GRID ---------- */
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: 20px;
+		}
+		.grid h3 { margin-top: 0; color: var(--accent); }
+		.card ul { margin: 0; padding-left: 20px; }
+
+		/* ---------- 7. PHOTO GALLERY ---------- */
+		.gallery {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			gap: 12px;
+		}
+		.gallery img, .gallery .empty {
+	width: 100%;
+	aspect-ratio: 3 / 4;   /* portrait shape: 3 wide, 4 tall */
+	height: auto;
+	object-fit: cover;
+	border-radius: 8px;
+	border: 1px solid var(--border);
+}
+		}
+		.gallery .empty {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: var(--card);
+			color: #888888;
+			font-size: 0.9rem;
+		}
+		/* ---------- SONG PLAYER ---------- */
+.player {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+.album {
+	width: 160px;
+	height: 160px;
+	object-fit: cover;
+	border-radius: 8px;
+	border: 1px solid var(--border);
+}
+.player-info { flex: 1; min-width: 220px; }
+.player-info h3 { margin: 0; }
+.artist { margin: 0 0 8px; font-style: italic; }
+
+.controls {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-top: 12px;
+}
+#play-btn {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	border: none;
+	background-color: var(--accent);
+	color: var(--accent-text);
+	font-size: 1rem;
+	cursor: pointer;
+}
+#current, #duration { font-size: 0.85rem; min-width: 36px; }
+
+/* The playing line (progress bar) */
+#progress {
+	flex: 1;
+	-webkit-appearance: none;
+	appearance: none;
+	height: 6px;
+	border-radius: 3px;
+	outline: none;
+	cursor: pointer;
+	background: linear-gradient(to right,
+		var(--accent) var(--fill, 0%),
+		var(--border) var(--fill, 0%));
+}
+#progress::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	background-color: var(--accent);
+}
+#progress::-moz-range-thumb {
+	width: 14px;
+	height: 14px;
+	border: none;
+	border-radius: 50%;
+	background-color: var(--accent);
+}
+
+		/* ---------- 8. FOOTER ---------- */
+		footer {
+			text-align: center;
+			padding: 24px 0;
+			border-top: 1px solid var(--border);
+			font-size: 0.9rem;
+		}
+
+
+	</style>
+</head>
+
+<body>
+
+	<!-- ===== NAVIGATION ===== -->
+	<nav>
+		<div class="container">
+			<a href="#about">About</a>
+			<a href="#info">Personal Info</a>
+			<a href="#education">Education</a>
+			<a href="#interests">Interests</a>
+			<a href="#song">Song</a>
+			<a href="#gallery">Gallery</a>
+			<a href="#contact">Contact</a>
+			<a href="https://www.instagram.com/akmal.29o/" target="_blank" rel="noopener">Akmal's Instagram</a>
+		</div>
+	</nav>
+
+	<!-- ===== HERO ===== -->
+	<header class="hero container">
+		
+		<img class="photo" src="akmal.jpeg" alt="Photo of FRIEND'S NAME">
+
+		<h1>Muhammad Akmal Bin Harry</h1>
+		<p>Always tired</p>
+	</header>
+
+	<main class="container">
+
+		<!-- ===== ABOUT ===== -->
+		<section id="about">
+			<h2>About</h2>
+			<div class="card">
+				<p>
+					He's currently studying in Unitar taking diploma in Arts and Graphics. While studying, he's taking a Full time job as a occasion decorator. We both have been friends since 2018. He likes to help people out to make everyone happy. he can cook and do house chores without having to be told by his parents. He loves to play video games during his free time because it makes him enjoy his own time.
+				</p>
+			</div>
+		</section>
+
+		<!-- ===== PERSONAL INFORMATION ===== -->
+		<section id="info">
+			<h2>Personal Information</h2>
+			<div class="card">
+				<table>
+					<!-- Delete or add rows as needed. Each row is one <tr> block. -->
+					<tr><th>Full name</th><td>MUHAMMAD AKMAL BIN HARRY</td></tr>
+					<tr><th>Nickname</th><td>MAL</td></tr>
+					<tr><th>Date of birth</th><td>29 10 2007</td></tr>
+					<tr><th>Age</th><td>19 Years Old</td></tr>
+					<tr><th>Nationality</th><td>Malaysia</td></tr>
+					<tr><th>Address</th><td>Lor Cahya Aman 2J, Petra Jaya, 93050 Kuching, Sarawak, Malaysia</td></tr>
+					<tr><th>Phone number</th><td>+60 19-290 2910</td></tr>
+					<tr><th>Email</th><td>akmalharry2910@gmail.com</td></tr>
+				</table>
+			</div>
+		</section>
+
+		<!-- ===== EDUCATION ===== -->
+		<section id="education">
+			<h2>Education</h2>
+			<div class="card">
+				<ul>
+					<li><strong>Current school / university:</strong> Unitar Kuching, 2025-2027</li>
+					<li><strong>Previous school:</strong> SMK Petra Jaya, 2020-2024</li>
+					<li><strong>Achievements:</strong> First place Mobile Legend Tournament Highschool </li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- ===== INTERESTS ===== -->
+		<section id="interests">
+			<h2>Interests</h2>
+			<div class="grid">
+				<div class="card">
+					<h3>Hobbies</h3>
+					<ul>
+						<li>Running</li>
+						<li>Hiking</li>
+						<li>Swimming</li>
+						<li>Badminton</li>
+						
+					</ul>
+				</div>
+				<div class="card">
+					<h3>Favorites</h3>
+					<ul>
+						<li>Food: Nasik ayam</li>
+						<li>Music: Hanya untukmu</li>
+						<li>Movie: action movies</li>
+						<li>Color: Black</li>
+					</ul>
+				</div>
+				<div class="card">
+					<h3>Goals</h3>
+					<ul>
+						<li>To be successful in life</li>
+						<li>Marry someone</li>
+						<li>Make parents happy</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+<!-- ===== SONG ===== -->
+<section id="song">
+	<h2>Song That Describes Him</h2>
+	<div class="card player">
+
+				<img class="album" src="Fourtwnty.png" alt="Album cover">
+
+		<div class="player-info">
+			<h3>Aku Mencintai Traumaku</h3>
+			<p class="artist">Fourtwnty</p> 
+		<audio id="audio" src="Akumencintaitraumaku.mp3.mp3"></audio>
+
+			<div class="controls">
+				<button id="play-btn" type="button">▶</button>
+				<span id="current">0:00</span>
+				<input type="range" id="progress" value="0" min="0" max="100" step="0.1">
+				<span id="duration">0:00</span>
+			</div>
+		</div>
+
+	</div>
+</section>
+		<!-- ===== GALLERY ===== -->
+		<section id="gallery">
+			<h2>Gallery</h2>
+			<div class="gallery">
+	<img src="akmal 2.jpeg" alt="Brody photo 1">
+	<img src="akmal 3.jpeg" alt="Brody photo 2">
+	<img src="akmal 5.jpeg" alt="Brody photo 3">
+</div>
+		</section>
+
+		<!-- ===== CONTACT ===== -->
+		<section id="contact">
+	<h2>Contact</h2>
+	<div class="card">
+		<p>
+			<strong>Email:</strong>
+			<a href="mailto:akmalharry2910@gmail.com">akmalharry2910@gmail.com</a>
+		</p>
+		<p>
+			<strong>Phone:</strong>
+			<a href="tel:+60192902910">+60 19-290 2910</a>
+		</p>
+		<p><strong>Address:</strong>Lor Cahya Aman 2J, Petra Jaya, 93050 Kuching, Sarawak, Malaysia</p>
+		<p>
+	<strong>Instagram:</strong>
+	<a href="https://www.instagram.com/akmal.29o/" target="_blank" rel="noopener">@akmal.29o</a>
+</p>
+
+	</div>
+</section>
+
+	</main>
+
+	<!-- ===== FOOTER ===== -->
+	<footer>
+		<div class="container">
+			Website about Mohamad Alli Iskandar, made by Muhammad Jinal Abidin &copy; <span id="year"></span>
+		</div>
+	</footer>
+
+	<script>
+		// Puts the current year in the footer automatically
+		document.getElementById("year").textContent = new Date().getFullYear();
+// ---------- SONG PLAYER ----------
+const audio = document.getElementById("audio");
+const playBtn = document.getElementById("play-btn");
+const progress = document.getElementById("progress");
+const currentTime = document.getElementById("current");
+const durationTime = document.getElementById("duration");
+
+// Turns seconds into m:ss, e.g. 185 becomes 3:05
+function formatTime(sec) {
+	if (isNaN(sec)) return "0:00";
+	const m = Math.floor(sec / 60);
+	const s = Math.floor(sec % 60).toString().padStart(2, "0");
+	return m + ":" + s;
+}
+
+// Play / pause button
+playBtn.addEventListener("click", function () {
+	if (audio.paused) {
+		audio.play();
+		playBtn.textContent = "⏸";
+	} else {
+		audio.pause();
+		playBtn.textContent = "▶";
+	}
+});
+
+// Show total length once the song loads
+audio.addEventListener("loadedmetadata", function () {
+	durationTime.textContent = formatTime(audio.duration);
+});
+
+// Move the line forward as the song plays
+audio.addEventListener("timeupdate", function () {
+	const percent = (audio.currentTime / audio.duration) * 100 || 0;
+	progress.value = percent;
+	progress.style.setProperty("--fill", percent + "%");
+	currentTime.textContent = formatTime(audio.currentTime);
+});
+
+// Click or drag the line to jump to another part of the song
+progress.addEventListener("input", function () {
+	audio.currentTime = (progress.value / 100) * audio.duration;
+});
+
+// Reset the button when the song ends
+audio.addEventListener("ended", function () {
+	playBtn.textContent = "▶";
+});
+	</script>
+
+</body>
+</html>
